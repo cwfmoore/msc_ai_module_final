@@ -82,7 +82,7 @@ scaler_type = "minmax" # Options: "standard", "minmax"
 train_size = 0.8 # Proportion of the dataset to include in the train split
 stratify = true # Whether to stratify the train-test split
 n_neighbors_range = [3, 19] # Range of neighbors to search for the best one
-cv = 10 # Number of folds for cross-validation
+cv = 5 # Number of folds for cross-validation
 scoring = "withdrawal_recall"
 
 [feature_groups]
