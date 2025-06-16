@@ -1,0 +1,115 @@
+[dataset_features]
+continuous_features = [
+    "previous_qualification_grade",
+    "admission_grade", 
+    "age_at_enrollment",
+    "curricular_units_1st_sem_grade",
+    "curricular_units_2nd_sem_grade",
+    "unemployment_rate",
+    "inflation_rate", 
+    "gdp",
+    "curricular_units_1st_sem_credited",
+    "curricular_units_1st_sem_enrolled",
+    "curricular_units_1st_sem_evaluations",
+    "curricular_units_1st_sem_approved",
+    "curricular_units_1st_sem_without_evaluations",
+    "curricular_units_2nd_sem_credited",
+    "curricular_units_2nd_sem_enrolled",
+    "curricular_units_2nd_sem_evaluations",
+    "curricular_units_2nd_sem_approved",
+    "curricular_units_2nd_sem_without_evaluations"
+]
+categorical_features = [
+    "marital_status",
+    "application_mode", 
+    "application_order",
+    "course",
+    "daytime_evening_attendance",
+    "previous_qualification",
+    "nacionality",
+    "mothers_qualification",
+    "fathers_qualification", 
+    "mothers_occupation",
+    "fathers_occupation",
+    "displaced",
+    "educational_special_needs",
+    "debtor",
+    "tuition_fees_up_to_date",
+    "gender",
+    "scholarship_holder",
+    "international"
+]
+
+[parental_features]
+# Higher education qualification codes
+# Based on Portuguese education system classifications
+higher_education_codes = [
+    2,  # Secondary education - 12th year of schooling or equivalent
+    3,  # Higher education - bachelor's degree
+    4,  # Higher education - licentiate
+    5,  # Higher education - master's
+    6,  # Higher education - doctorate
+    39, # Higher education - bachelor's degree (Bologna process)
+    40, # Higher education - master's (Bologna process)
+    41, # Higher education - master's (pre-Bologna process)
+    42, # Higher education - doctorate (Bologna process)
+    43, # Higher education - doctorate (pre-Bologna process)
+    44  # Other higher education
+]
+
+# Professional occupation codes
+# Based on Portuguese Standard Classification of Occupations
+professional_occupation_codes = [
+    1,   # Legislators, senior officials and managers
+    2,   # Professionals
+    3,   # Technicians and associate professionals
+    101, # Armed forces officers
+    102, # Armed forces NCOs
+    112, # Managing directors and chief executives
+    114, # Senior government officials
+    121, # Business services and administration managers
+    122, # Sales, marketing and development managers
+    123, # Administrative and commercial managers
+    124, # Professional services managers
+    131, # Production and specialized services managers
+    132, # Hospitality, retail and other services managers
+    134, # Professional services managers
+    135  # Information and communications technology service managers
+]
+
+[k-NN_model]
+scaler_type = "minmax" # Options: "standard", "minmax"
+train_size = 0.8 # Proportion of the dataset to include in the train split
+stratify = true # Whether to stratify the train-test split
+n_neighbors_range = [3, 19] # Range of neighbors to search for the best one
+cv = 10 # Number of folds for cross-validation
+scoring = "withdrawal_recall"
+
+[feature_groups]
+numeric_features = [
+    "application_order", 
+    "admission_grade", 
+    "age_at_enrollment",
+    "curricular_units_1st_sem_grade", 
+    "course_withdrawal_rate", 
+    "application_mode_withdrawal_rate"
+]
+binary_features = [
+    "tuition_fees_up_to_date", 
+    "scholarship_holder", 
+    "parental_higher_education", 
+    "parental_professional_occupation"
+]
+
+[logistic_regression_grid_search]
+C_values = [0.01, 0.1, 1.0, 10.0, 100.0]
+class_weights = ["none", "balanced"]  # "none" = None in Python
+max_iter = 1000
+random_state = 42
+cv_folds = 5
+
+[logistic_regression_model]
+scaler_type = "standard"  # Options: "standard", "minmax"
+train_size = 0.8  # Proportion of the dataset to include in the train split
+use_acceleration = true  # Enable Intel acceleration for faster training
+train_new_model = false  # Set to false to load an existing model
